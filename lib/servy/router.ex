@@ -1,5 +1,6 @@
 defmodule Servy.Router do
   alias Servy.Conv
+  alias Servy.BearController
 
   @pages_path Path.expand("../../pages", __DIR__)
 
@@ -10,17 +11,16 @@ defmodule Servy.Router do
   end
 
   def route(%Conv{method: "GET", path: "/bears"} = conv) do
-    %Conv{ conv | status: 200, resp_body: "Teddy, Smokey, Paddington" }
+    BearController.index(conv)
   end
 
-  #name=Baloo&type=Brown
   def route(%Conv{method: "GET", path: "/bears/" <> id } = conv) do
-    params = %{"name" => "Baloo", "type" => "Brown"}
-    %Conv{ conv | status: 200, resp_body: "Bear #{id}"}
+    params = Map.put(conv.params, "id", id)
+    BearController.show(conv, params)
   end
 
   def route(%Conv{method: "POST", path: "/bears"} = conv) do
-    %Conv{conv | status: 201, resp_body: "Create a bear!"}
+    BearController.create(conv, conv.params)
   end
 
   def route(%Conv{method: "GET", path: "/about"} = conv) do

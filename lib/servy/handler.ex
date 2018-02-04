@@ -27,14 +27,13 @@ defmodule Servy.Handler do
 end
 
 request = """
-POST /bears HTTP/1.1
+GET /bears/1 HTTP/1.1
 Host: example.com
 User-Agent: ExampleBrowser/1.0
 Accept: */*
 Content-Type: application/x-www-form-urlencoded
 Content-Length: 21
 
-name=Baloo&type=Brown
 """
 
 #1st line in request is requestline with (method, path, protocol)
